@@ -1,6 +1,11 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <ul>
+    <li v-for="data in tableau" v-bind:key="data.color">
+        {{data.color}}=>{{data.value}}
+    </li>
+    </ul>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -84,12 +89,25 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Nouvelle apps js (vue-webpack-babel)',
+      tableau :[]
     }
+  },
+  created(){
+  axios.get('http://localhost:8000/api/testR')
+    .then(response => {
+      this.tableau = response.data
+    }
+    )
+    .catch(e => {
+      console.log(e)
+    }
+    )
   }
 }
 </script>
